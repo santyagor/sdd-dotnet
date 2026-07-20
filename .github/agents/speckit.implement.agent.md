@@ -45,6 +45,13 @@ You **MUST** consider the user input before proceeding (if not empty).
     After emitting the block above you MUST actually invoke the hook and wait for it to finish before continuing. Run it the same way you would run the command yourself in this agent/session (the invocation may differ from the literal `{command}` id shown above, e.g. a skills-mode agent runs it as `/skill:speckit-...` or `$speckit-...`). Emitting the block alone does not run the hook.
 - If no hooks are registered or `.specify/extensions.yml` does not exist, skip silently
 
+- Before starting implementation, inspect the spec file's `Estado:` field:
+  - If it is `Aprobada`, update it to `En implementación` before proceeding.
+  - If it is `Borrador`, `Implementada` or missing, stop and report the invalid precondition.
+- At completion, before final reporting, verify the post-implementation transition:
+  - Only set `Estado: Implementada` when `tasks.md` contains no incomplete tasks and `quickstart.md` documents validation evidence such as build/test commands or validation steps.
+  - If those conditions are not met, keep the spec state as `En implementación` and report the specific blocking cause(s).
+
 ## Outline
 
 1. Run `.specify/scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks` from repo root and parse FEATURE_DIR and AVAILABLE_DOCS list. All paths must be absolute. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").

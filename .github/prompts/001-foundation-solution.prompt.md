@@ -1,5 +1,5 @@
 ---
-name: realtor-solution-foundation
+name: 001-realtor-solution-foundation
 description:Crea la especificacion base de la solucion Realtor, validando global.json como prerequisito obligatorio.
 agent: speckit.specify
 ---

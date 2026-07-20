@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f8fafc;
+  color: #111827;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}

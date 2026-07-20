@@ -1,0 +1,11 @@
+@RealtorApi_HostAddress = http://localhost:5109
+
+GET {{RealtorApi_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{RealtorApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

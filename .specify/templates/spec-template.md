@@ -4,7 +4,9 @@
 
 **Created**: [DATE]
 
-**Status**: Draft
+**Estado**: Borrador
+
+- Estados canónicos: Borrador, Aprobada, En implementación, Implementada
 
 **Input**: User description: "$ARGUMENTS"
 

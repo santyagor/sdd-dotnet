@@ -1,25 +1,18 @@
 <!--
 Sync Impact Report
-- Version change: template-unset -> 1.0.0
+- Version change: 1.0.0 -> 1.1.0
 - Modified principles:
-	- Principle slot 1 -> I. Solucion Fullstack Unica
-	- Principle slot 2 -> II. Spec-Driven Development No Negociable
-	- Principle slot 3 -> III. Arquitectura Canonica de Backend y Frontend
-	- Principle slot 4 -> IV. Persistencia Evolutiva y Contratos Estables
-	- Principle slot 5 -> V. Calidad, Trazabilidad y Disciplina de Entrega
+	- No principles renamed
 - Added sections:
-	- Restricciones Operativas
-	- Flujo de Trabajo y Validaciones
+	- Ciclo de estado de specs
 - Removed sections:
 	- Ninguna
 - Templates requiring updates:
-	- ✅ reviewed without changes: .specify/templates/plan-template.md
-	- ✅ reviewed without changes: .specify/templates/spec-template.md
-	- ✅ reviewed without changes: .specify/templates/tasks-template.md
-	- ⚠ pending manual review: .specify/templates/commands/*.md (directory not present)
-- Runtime guidance reviewed:
-	- ✅ reviewed without changes: .github/agents/speckit.constitution.agent.md
-	- ✅ reviewed without changes: .specify/extensions/agent-context/README.md
+	- ✅ updated: .specify/templates/spec-template.md
+	- ⚠ pending manual review: .specify/templates/tasks-template.md
+	- ⚠ pending manual review: .specify/templates/plan-template.md
+- Runtime guidance requiring update:
+	- ✅ updated: .github/agents/speckit.implement.agent.md
 - Follow-up TODOs:
 	- Ninguno
 -->
@@ -148,6 +141,30 @@ Cuando un comando opera en modo interactivo, DEBE seguir este protocolo sin exce
 
 Toda pregunta DEBE redactarse de forma clara, directa y entendible por el humano, evitando ambigüedad o jerga innecesaria, para que pueda escoger la opción correcta con seguridad.
 
+## Ciclo de estado de specs
+
+Cada spec DEBE registrar su estado en el campo `Estado:` de la plantilla de spec.
+
+Los estados canónicos son:
+- `Borrador`: al crear el spec.
+- `Aprobada`: al aprobar la revisión de spec.
+- `En implementación`: al iniciar el flujo de implementación.
+- `Implementada`: al finalizar la implementación con todas las condiciones cumplidas.
+
+Solo se permiten estas transiciones:
+- `Borrador` → `Aprobada`
+- `Aprobada` → `En implementación`
+- `En implementación` → `Implementada`
+
+Está prohibido marcar una spec como `Implementada` si:
+- Existe al menos una tarea sin completar en `tasks.md`.
+- No existe evidencia de validación en `quickstart.md`.
+
+Si alguna condición falla, el estado DEBE permanecer en `En implementación` y el flujo DEBE reportar un bloqueo con causa explícita.
+
+Las actualizaciones de estado DEBEN ejecutarse automáticamente en el flujo speckit:
+1. Antes de iniciar la implementación, cambiar `Aprobada` a `En implementación`.
+2. Al finalizar la ejecución, cambiar `En implementación` a `Implementada` solo si se verifica que todas las tareas están completas y que `quickstart.md` documenta pasos de validación.
 ### Formato de pregunta con opciones
 
 Pregunta [N de TOTAL] - [tema corto]  
@@ -235,4 +252,4 @@ La única resolución legítima es la decisión humana documentada vía enmienda
 
 
 
-**Version**: 1.0.0 | **Ratified**: 2026-07-04 | **Last Amended**: 2026-07-04
+**Version**: 1.1.0 | **Ratified**: 2026-07-04 | **Last Amended**: 2026-07-20

@@ -4,7 +4,7 @@
 
 **Created**: 2026-07-20
 
-**Estado**: En implementación
+**Estado**: Implementada
 
 **Input**: User description: "Crear la especificación 003-properties-persistence-seeding."
 

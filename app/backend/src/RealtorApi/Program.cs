@@ -32,8 +32,15 @@ app.MapSlices();
 app.MapGet("/", () => Results.Ok(new { status = "OK" }));
 
 // Apply migrations and run seeding at startup (async)
-await app.MigrateDatabaseAsync();
-await app.UseAsyncSeeding();
+try
+{
+    await app.MigrateDatabaseAsync();
+    await app.UseAsyncSeeding();
+}
+catch (Exception ex)
+{
+    app.Logger.LogWarning(ex, "Database initialization failed on startup; continuing without migration/seed.");
+}
 
 app.Run();
 

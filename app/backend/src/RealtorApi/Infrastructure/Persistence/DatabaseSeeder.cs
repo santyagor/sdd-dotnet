@@ -34,6 +34,21 @@ public class DatabaseSeeder
         var manifest = JsonSerializer.Deserialize<SeedManifest>(manifestJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         if (manifest == null) return;
 
+        var statusesPath = Path.Combine(seedDir, manifest.PropertyStatusesJson ?? "properties-statuses.json");
+        var validStatuses = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        if (File.Exists(statusesPath))
+        {
+            var statusesJson = await File.ReadAllTextAsync(statusesPath, cancellationToken);
+            var statusList = JsonSerializer.Deserialize<List<string>>(statusesJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (statusList != null)
+            {
+                foreach (var status in statusList)
+                {
+                    validStatuses.Add(status.Trim());
+                }
+            }
+        }
+
         var propertiesPath = Path.Combine(seedDir, manifest.PropertiesJson ?? "properties.json");
         if (!File.Exists(propertiesPath)) return;
 
@@ -53,9 +68,13 @@ public class DatabaseSeeder
                 existing.BathroomCount = sp.BathroomCount ?? existing.BathroomCount;
                 existing.AreaSquareMeters = sp.AreaSquareMeters ?? existing.AreaSquareMeters;
                 existing.UpdatedAt = DateTime.UtcNow;
-                if (!string.IsNullOrWhiteSpace(sp.ImageFileName) && !string.IsNullOrWhiteSpace(manifest.ImageUrlBase))
+                if (!string.IsNullOrWhiteSpace(sp.Status) && validStatuses.Contains(sp.Status))
                 {
-                    existing.ImageUrl = PathCombineForUrl(manifest.ImageUrlBase, sp.ImageFileName);
+                    existing.Status = Enum.Parse<PropertyStatus>(sp.Status, true);
+                }
+                if (!string.IsNullOrWhiteSpace(sp.ImageUrl) && !string.IsNullOrWhiteSpace(manifest.ImageUrlBase))
+                {
+                    existing.ImageUrl = PathCombineForUrl(manifest.ImageUrlBase, sp.ImageUrl);
                 }
             }
             else
@@ -73,8 +92,8 @@ public class DatabaseSeeder
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Status = Enum.TryParse<PropertyStatus>(sp.Status, true, out var s) ? s : PropertyStatus.Available,
-                    ImageUrl = !string.IsNullOrWhiteSpace(sp.ImageFileName) && !string.IsNullOrWhiteSpace(manifest.ImageUrlBase)
-                        ? PathCombineForUrl(manifest.ImageUrlBase, sp.ImageFileName)
+                    ImageUrl = !string.IsNullOrWhiteSpace(sp.ImageUrl) && !string.IsNullOrWhiteSpace(manifest.ImageUrlBase)
+                        ? PathCombineForUrl(manifest.ImageUrlBase, sp.ImageUrl)
                         : string.Empty
                 };
 
@@ -126,6 +145,8 @@ public class DatabaseSeeder
         int? BedroomCount,
         int? BathroomCount,
         decimal? AreaSquareMeters,
-        string? ImageFileName
+        string? ImageUrl,
+        DateTime? CreatedAt,
+        DateTime? UpdatedAt
     );
 }

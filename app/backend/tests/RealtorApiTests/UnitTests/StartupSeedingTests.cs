@@ -1,4 +1,5 @@
 using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -13,7 +14,8 @@ public class StartupSeedingTests
     public async Task StartupExecutesMigrationAndSeeding()
     {
         // Use a temp directory to isolate from actual project seed data
-        var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"), "app", "backend", "src", "RealtorApi");
+        var tempRoot = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+        var tempDir = Path.Combine(tempRoot, "app", "backend", "src", "RealtorApi");
         Directory.CreateDirectory(tempDir);
 
         try
@@ -79,7 +81,7 @@ public class StartupSeedingTests
         }
         finally
         {
-            Directory.Delete(Path.Combine(Path.GetTempPath(), Path.GetTempPath().Split(Path.DirectorySeparatorChar).Last()), true);
+            Directory.Delete(tempRoot, true);
         }
     }
 

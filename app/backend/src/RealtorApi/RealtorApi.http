@@ -9,3 +9,13 @@ GET {{RealtorApi_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{RealtorApi_HostAddress}}/api/properties
+Accept: application/json
+
+###
+
+GET {{RealtorApi_HostAddress}}/api/properties?page=1&pageSize=6
+Accept: application/json
+
+###

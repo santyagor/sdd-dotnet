@@ -52,7 +52,6 @@ namespace RealtorApi.Migrations
                         .HasColumnType("character varying(1000)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasMaxLength(2048)
                         .HasColumnType("character varying(2048)");
 

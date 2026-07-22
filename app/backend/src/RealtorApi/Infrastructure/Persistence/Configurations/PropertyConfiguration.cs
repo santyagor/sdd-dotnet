@@ -35,7 +35,6 @@ public class PropertyConfiguration : IEntityTypeConfiguration<Property>
             .HasPrecision(10, 2);
 
         builder.Property(p => p.ImageUrl)
-            .IsRequired()
             .HasMaxLength(2048);
 
         builder.Property(p => p.CreatedAt).IsRequired();

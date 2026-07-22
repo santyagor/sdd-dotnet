@@ -24,8 +24,8 @@ public class DatabaseSeederTests
                 "\"propertiesJson\": \"properties.json\"," +
                 "\"propertyStatusesJson\": \"properties-statuses.json\"," +
                 "\"imagesSourceDirectory\": \"properties\"," +
-                "\"imagesPublicDirectory\": \"wwwroot/images/properties\"," +
-                "\"imageUrlBase\": \"/images/properties\"" +
+                "\"imagesPublicDirectory\": \"wwwroot/assets/properties\"," +
+                "\"imageUrlBase\": \"/assets/properties\"" +
                 "}";
 
             File.WriteAllText(Path.Combine(seedDir, "seed-manifest.json"), manifest);
@@ -63,8 +63,8 @@ public class DatabaseSeederTests
 
             property.Title.Should().Be("Casa de prueba");
             property.Status.Should().Be(RealtorApi.Domain.Properties.PropertyStatus.Available);
-            property.ImageUrl.Should().Be("/images/properties/house1.png");
-            File.Exists(Path.Combine(rootDir, "wwwroot", "images", "properties", "house1.png")).Should().BeTrue();
+            property.ImageUrl.Should().Be("/assets/properties/house1.png");
+            File.Exists(Path.Combine(rootDir, "wwwroot", "assets", "properties", "house1.png")).Should().BeTrue();
 
             await seeder.SeedAsync();
             (await db.Properties.CountAsync()).Should().Be(1);

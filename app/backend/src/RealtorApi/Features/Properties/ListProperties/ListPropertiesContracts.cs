@@ -14,7 +14,7 @@ public sealed record PropertyListItem(
     int BedroomCount,
     int BathroomCount,
     decimal AreaSquareMeters,
-    string ImageUrl);
+    string? ImageUrl);
 
 public sealed record PaginatedPropertyListResponse(
     IReadOnlyCollection<PropertyListItem> Items,
@@ -35,4 +35,4 @@ public sealed record PropertyListProjection(
     int BedroomCount,
     int BathroomCount,
     decimal AreaSquareMeters,
-    string ImageUrl);
+    string? ImageUrl);

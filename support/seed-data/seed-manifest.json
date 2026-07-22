@@ -2,6 +2,6 @@
   "propertiesJson": "properties.json",
   "propertyStatusesJson": "properties-statuses.json",
   "imagesSourceDirectory": "properties",
-  "imagesPublicDirectory": "wwwroot/images/properties",
-  "imageUrlBase": "/images/properties"
+  "imagesPublicDirectory": "wwwroot/assets/properties",
+  "imageUrlBase": "/assets/properties"
 }

@@ -28,8 +28,8 @@ public class StartupSeedingTests
                 "\"propertiesJson\": \"properties.json\"," +
                 "\"propertyStatusesJson\": \"properties-statuses.json\"," +
                 "\"imagesSourceDirectory\": \"properties\"," +
-                "\"imagesPublicDirectory\": \"wwwroot/images/properties\"," +
-                "\"imageUrlBase\": \"/images/properties\"" +
+                "\"imagesPublicDirectory\": \"wwwroot/assets/properties\"," +
+                "\"imageUrlBase\": \"/assets/properties\"" +
                 "}";
 
             File.WriteAllText(Path.Combine(seedDir, "seed-manifest.json"), manifest);
@@ -77,7 +77,7 @@ public class StartupSeedingTests
             var properties = await db.Properties.ToListAsync();
             properties.Should().HaveCount(1);
             properties[0].Title.Should().Be("Casa de startup test");
-            properties[0].ImageUrl.Should().Be("/images/properties/startup.png");
+            properties[0].ImageUrl.Should().Be("/assets/properties/startup.png");
         }
         finally
         {

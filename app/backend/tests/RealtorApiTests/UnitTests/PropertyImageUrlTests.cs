@@ -24,8 +24,8 @@ public class PropertyImageUrlTests
                 "\"propertiesJson\": \"properties.json\"," +
                 "\"propertyStatusesJson\": \"properties-statuses.json\"," +
                 "\"imagesSourceDirectory\": \"properties\"," +
-                "\"imagesPublicDirectory\": \"wwwroot/images/properties\"," +
-                "\"imageUrlBase\": \"/images/properties\"" +
+                "\"imagesPublicDirectory\": \"wwwroot/assets/properties\"," +
+                "\"imageUrlBase\": \"/assets/properties\"" +
                 "}";
 
             File.WriteAllText(Path.Combine(seedDir, "seed-manifest.json"), manifest);
@@ -63,14 +63,14 @@ public class PropertyImageUrlTests
 
             // Verify ImageUrl is a public path (starts with /), not a file system path
             property.ImageUrl.Should().NotBeNullOrEmpty();
-            property.ImageUrl.Should().StartWith("/images/properties");
+            property.ImageUrl.Should().StartWith("/assets/properties");
             property.ImageUrl.Should().Contain("property-test.png");
             property.ImageUrl.Should().NotContain("\\");
             property.ImageUrl.Should().NotContain("wwwroot");
             property.ImageUrl.Should().NotContain("support");
 
             // Verify image file was copied to public directory
-            var publicImagePath = Path.Combine(rootDir, "wwwroot", "images", "properties", "property-test.png");
+            var publicImagePath = Path.Combine(rootDir, "wwwroot", "assets", "properties", "property-test.png");
             File.Exists(publicImagePath).Should().BeTrue();
         }
         finally

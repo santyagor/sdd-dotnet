@@ -24,8 +24,8 @@ public class PropertyImageHostingTests
                 "\"propertiesJson\": \"properties.json\"," +
                 "\"propertyStatusesJson\": \"properties-statuses.json\"," +
                 "\"imagesSourceDirectory\": \"properties\"," +
-                "\"imagesPublicDirectory\": \"wwwroot/images/properties\"," +
-                "\"imageUrlBase\": \"/images/properties\"" +
+                "\"imagesPublicDirectory\": \"wwwroot/assets/properties\"," +
+                "\"imageUrlBase\": \"/assets/properties\"" +
                 "}";
 
             File.WriteAllText(Path.Combine(seedDir, "seed-manifest.json"), manifest);
@@ -74,7 +74,7 @@ public class PropertyImageHostingTests
             await seeder.SeedAsync();
 
             // Verify both properties images are at public location
-            var publicDir = Path.Combine(rootDir, "wwwroot", "images", "properties");
+            var publicDir = Path.Combine(rootDir, "wwwroot", "assets", "properties");
             Directory.Exists(publicDir).Should().BeTrue();
 
             var img1Path = Path.Combine(publicDir, "img1.png");
@@ -91,8 +91,8 @@ public class PropertyImageHostingTests
             var properties = await db.Properties.OrderBy(p => p.Title).ToListAsync();
             properties.Should().HaveCount(2);
 
-            properties[0].ImageUrl.Should().Be("/images/properties/img1.png");
-            properties[1].ImageUrl.Should().Be("/images/properties/img2.png");
+            properties[0].ImageUrl.Should().Be("/assets/properties/img1.png");
+            properties[1].ImageUrl.Should().Be("/assets/properties/img2.png");
         }
         finally
         {

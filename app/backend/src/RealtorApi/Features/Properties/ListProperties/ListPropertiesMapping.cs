@@ -35,14 +35,17 @@ public static class ListPropertiesMapping
             BuildPublicImageUrl(projection.ImageUrl, httpContext));
     }
 
-    public static string BuildPublicImageUrl(string? persistedImageUrl, HttpContext httpContext)
+    public static string? BuildPublicImageUrl(string? persistedImageUrl, HttpContext httpContext)
     {
         ArgumentNullException.ThrowIfNull(httpContext);
 
-        var fileName = Path.GetFileName(persistedImageUrl ?? string.Empty);
-        var path = string.IsNullOrWhiteSpace(fileName)
-            ? "/assets/properties/"
-            : $"/assets/properties/{Uri.EscapeDataString(fileName)}";
+        if (string.IsNullOrWhiteSpace(persistedImageUrl))
+        {
+            return null;
+        }
+
+        var fileName = Path.GetFileName(persistedImageUrl);
+        var path = $"/assets/properties/{Uri.EscapeDataString(fileName)}";
 
         return $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{path}";
     }

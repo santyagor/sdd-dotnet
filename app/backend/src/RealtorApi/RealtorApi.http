@@ -19,3 +19,133 @@ GET {{RealtorApi_HostAddress}}/api/properties?page=1&pageSize=6
 Accept: application/json
 
 ###
+
+### Alta de propiedad sin imagen
+POST {{RealtorApi_HostAddress}}/api/properties
+Content-Type: multipart/form-data; boundary=----RealtorApiBoundarySinImagen
+
+------RealtorApiBoundarySinImagen
+Content-Disposition: form-data; name="title"
+
+Casa manual sin imagen
+------RealtorApiBoundarySinImagen
+Content-Disposition: form-data; name="description"
+
+Propiedad creada de forma manual sin archivo adjunto.
+------RealtorApiBoundarySinImagen
+Content-Disposition: form-data; name="address"
+
+123 Manual Ave
+------RealtorApiBoundarySinImagen
+Content-Disposition: form-data; name="price"
+
+2500
+------RealtorApiBoundarySinImagen
+Content-Disposition: form-data; name="status"
+
+Available
+------RealtorApiBoundarySinImagen
+Content-Disposition: form-data; name="bedroomCount"
+
+3
+------RealtorApiBoundarySinImagen
+Content-Disposition: form-data; name="bathroomCount"
+
+2
+------RealtorApiBoundarySinImagen
+Content-Disposition: form-data; name="areaSquareMeters"
+
+145.5
+------RealtorApiBoundarySinImagen--
+
+###
+
+### Alta de propiedad con imagen PNG válida
+POST {{RealtorApi_HostAddress}}/api/properties
+Content-Type: multipart/form-data; boundary=----RealtorApiBoundaryConImagen
+
+------RealtorApiBoundaryConImagen
+Content-Disposition: form-data; name="title"
+
+Casa manual con imagen
+------RealtorApiBoundaryConImagen
+Content-Disposition: form-data; name="description"
+
+Propiedad creada de forma manual con archivo adjunto.
+------RealtorApiBoundaryConImagen
+Content-Disposition: form-data; name="address"
+
+456 Manual Blvd
+------RealtorApiBoundaryConImagen
+Content-Disposition: form-data; name="price"
+
+3200
+------RealtorApiBoundaryConImagen
+Content-Disposition: form-data; name="status"
+
+Available
+------RealtorApiBoundaryConImagen
+Content-Disposition: form-data; name="bedroomCount"
+
+4
+------RealtorApiBoundaryConImagen
+Content-Disposition: form-data; name="bathroomCount"
+
+3
+------RealtorApiBoundaryConImagen
+Content-Disposition: form-data; name="areaSquareMeters"
+
+185.25
+------RealtorApiBoundaryConImagen
+Content-Disposition: form-data; name="imageFile"; filename="sample.png"
+Content-Type: image/png
+
+< ./support/seed-data/properties/1.png
+------RealtorApiBoundaryConImagen--
+
+###
+
+### Alta de propiedad con imagen inválida
+POST {{RealtorApi_HostAddress}}/api/properties
+Content-Type: multipart/form-data; boundary=----RealtorApiBoundaryInvalida
+
+------RealtorApiBoundaryInvalida
+Content-Disposition: form-data; name="title"
+
+Casa manual inválida
+------RealtorApiBoundaryInvalida
+Content-Disposition: form-data; name="description"
+
+Propiedad con archivo no permitido.
+------RealtorApiBoundaryInvalida
+Content-Disposition: form-data; name="address"
+
+789 Manual Road
+------RealtorApiBoundaryInvalida
+Content-Disposition: form-data; name="price"
+
+2800
+------RealtorApiBoundaryInvalida
+Content-Disposition: form-data; name="status"
+
+Available
+------RealtorApiBoundaryInvalida
+Content-Disposition: form-data; name="bedroomCount"
+
+2
+------RealtorApiBoundaryInvalida
+Content-Disposition: form-data; name="bathroomCount"
+
+1
+------RealtorApiBoundaryInvalida
+Content-Disposition: form-data; name="areaSquareMeters"
+
+110
+------RealtorApiBoundaryInvalida
+Content-Disposition: form-data; name="imageFile"; filename="invalid.txt"
+Content-Type: text/plain
+
+Este contenido no corresponde a una imagen PNG ni JPG.
+------RealtorApiBoundaryInvalida--
+
+###

@@ -13,7 +13,7 @@ public class Property
     public int BedroomCount { get; set; }
     public int BathroomCount { get; set; }
     public decimal AreaSquareMeters { get; set; }
-    public string ImageUrl { get; set; } = null!;
+    public string? ImageUrl { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

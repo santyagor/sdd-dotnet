@@ -26,7 +26,7 @@ app.UseHttpsRedirection();
 
 // Serve static files from wwwroot (default) and ensure images can be served
 app.UseStaticFiles();
-var propertiesImagesPath = Path.Combine(app.Environment.WebRootPath ?? Path.Combine(app.Environment.ContentRootPath, "wwwroot"), "images", "properties");
+var propertiesImagesPath = Path.Combine(app.Environment.WebRootPath ?? Path.Combine(app.Environment.ContentRootPath, "wwwroot"), "assets", "properties");
 Directory.CreateDirectory(propertiesImagesPath);
 app.UseStaticFiles(new StaticFileOptions
 {

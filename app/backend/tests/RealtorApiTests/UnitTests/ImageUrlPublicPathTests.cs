@@ -24,8 +24,8 @@ public class ImageUrlPublicPathTests
                 "\"propertiesJson\": \"properties.json\"," +
                 "\"propertyStatusesJson\": \"properties-statuses.json\"," +
                 "\"imagesSourceDirectory\": \"properties\"," +
-                "\"imagesPublicDirectory\": \"wwwroot/images/properties\"," +
-                "\"imageUrlBase\": \"/images/properties\"" +
+                "\"imagesPublicDirectory\": \"wwwroot/assets/properties\"," +
+                "\"imageUrlBase\": \"/assets/properties\"" +
                 "}";
 
             File.WriteAllText(Path.Combine(seedDir, "seed-manifest.json"), manifest);
@@ -72,7 +72,7 @@ public class ImageUrlPublicPathTests
 
             // Ensure ImageUrl is an HTTP-consumable path
             property.ImageUrl.Should().StartWith("/");
-            property.ImageUrl.Should().Be("/images/properties/secure-image.png");
+            property.ImageUrl.Should().Be("/assets/properties/secure-image.png");
         }
         finally
         {

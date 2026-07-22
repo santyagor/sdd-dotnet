@@ -94,7 +94,7 @@ public class DatabaseSeeder
                     Status = Enum.TryParse<PropertyStatus>(sp.Status, true, out var s) ? s : PropertyStatus.Available,
                     ImageUrl = !string.IsNullOrWhiteSpace(sp.ImageUrl) && !string.IsNullOrWhiteSpace(manifest.ImageUrlBase)
                         ? PathCombineForUrl(manifest.ImageUrlBase, sp.ImageUrl)
-                        : string.Empty
+                        : null
                 };
 
                 await _db.Properties.AddAsync(prop, cancellationToken);

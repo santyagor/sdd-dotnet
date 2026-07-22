@@ -149,3 +149,214 @@ Este contenido no corresponde a una imagen PNG ni JPG.
 ------RealtorApiBoundaryInvalida--
 
 ###
+
+### Actualización de propiedad sin imagen nueva
+PUT {{RealtorApi_HostAddress}}/api/properties/00000000-0000-0000-0000-000000000001
+Content-Type: multipart/form-data; boundary=----RealtorApiBoundaryUpdateSinImagen
+
+------RealtorApiBoundaryUpdateSinImagen
+Content-Disposition: form-data; name="title"
+
+Casa manual actualizada sin imagen
+------RealtorApiBoundaryUpdateSinImagen
+Content-Disposition: form-data; name="description"
+
+Propiedad actualizada manualmente sin archivo adjunto.
+------RealtorApiBoundaryUpdateSinImagen
+Content-Disposition: form-data; name="address"
+
+123 Manual Ave Actualizada
+------RealtorApiBoundaryUpdateSinImagen
+Content-Disposition: form-data; name="price"
+
+2550
+------RealtorApiBoundaryUpdateSinImagen
+Content-Disposition: form-data; name="status"
+
+Available
+------RealtorApiBoundaryUpdateSinImagen
+Content-Disposition: form-data; name="bedroomCount"
+
+3
+------RealtorApiBoundaryUpdateSinImagen
+Content-Disposition: form-data; name="bathroomCount"
+
+2
+------RealtorApiBoundaryUpdateSinImagen
+Content-Disposition: form-data; name="areaSquareMeters"
+
+145.5
+------RealtorApiBoundaryUpdateSinImagen--
+
+###
+
+### Actualización de propiedad con imagen PNG válida
+PUT {{RealtorApi_HostAddress}}/api/properties/00000000-0000-0000-0000-000000000001
+Content-Type: multipart/form-data; boundary=----RealtorApiBoundaryUpdateConImagen
+
+------RealtorApiBoundaryUpdateConImagen
+Content-Disposition: form-data; name="title"
+
+Casa manual actualizada con imagen
+------RealtorApiBoundaryUpdateConImagen
+Content-Disposition: form-data; name="description"
+
+Propiedad actualizada manualmente con un nuevo archivo.
+------RealtorApiBoundaryUpdateConImagen
+Content-Disposition: form-data; name="address"
+
+123 Manual Ave Actualizada
+------RealtorApiBoundaryUpdateConImagen
+Content-Disposition: form-data; name="price"
+
+2600
+------RealtorApiBoundaryUpdateConImagen
+Content-Disposition: form-data; name="status"
+
+Available
+------RealtorApiBoundaryUpdateConImagen
+Content-Disposition: form-data; name="bedroomCount"
+
+3
+------RealtorApiBoundaryUpdateConImagen
+Content-Disposition: form-data; name="bathroomCount"
+
+2
+------RealtorApiBoundaryUpdateConImagen
+Content-Disposition: form-data; name="areaSquareMeters"
+
+146
+------RealtorApiBoundaryUpdateConImagen
+Content-Disposition: form-data; name="imageFile"; filename="sample.png"
+Content-Type: image/png
+
+< ./support/seed-data/properties/1.png
+------RealtorApiBoundaryUpdateConImagen--
+
+###
+
+### Actualización de propiedad inexistente
+PUT {{RealtorApi_HostAddress}}/api/properties/11111111-1111-1111-1111-111111111111
+Content-Type: multipart/form-data; boundary=----RealtorApiBoundaryUpdate404
+
+------RealtorApiBoundaryUpdate404
+Content-Disposition: form-data; name="title"
+
+Casa inexistente
+------RealtorApiBoundaryUpdate404
+Content-Disposition: form-data; name="description"
+
+Propiedad que no existe en la base de datos.
+------RealtorApiBoundaryUpdate404
+Content-Disposition: form-data; name="address"
+
+000 Missing St
+------RealtorApiBoundaryUpdate404
+Content-Disposition: form-data; name="price"
+
+1000
+------RealtorApiBoundaryUpdate404
+Content-Disposition: form-data; name="status"
+
+Available
+------RealtorApiBoundaryUpdate404
+Content-Disposition: form-data; name="bedroomCount"
+
+1
+------RealtorApiBoundaryUpdate404
+Content-Disposition: form-data; name="bathroomCount"
+
+1
+------RealtorApiBoundaryUpdate404
+Content-Disposition: form-data; name="areaSquareMeters"
+
+50
+------RealtorApiBoundaryUpdate404--
+
+###
+
+### Actualización con archivo no permitido
+PUT {{RealtorApi_HostAddress}}/api/properties/00000000-0000-0000-0000-000000000001
+Content-Type: multipart/form-data; boundary=----RealtorApiBoundaryUpdate415
+
+------RealtorApiBoundaryUpdate415
+Content-Disposition: form-data; name="title"
+
+Casa con archivo no permitido
+------RealtorApiBoundaryUpdate415
+Content-Disposition: form-data; name="description"
+
+Propiedad con archivo no admitido.
+------RealtorApiBoundaryUpdate415
+Content-Disposition: form-data; name="address"
+
+123 Manual Ave
+------RealtorApiBoundaryUpdate415
+Content-Disposition: form-data; name="price"
+
+2500
+------RealtorApiBoundaryUpdate415
+Content-Disposition: form-data; name="status"
+
+Available
+------RealtorApiBoundaryUpdate415
+Content-Disposition: form-data; name="bedroomCount"
+
+3
+------RealtorApiBoundaryUpdate415
+Content-Disposition: form-data; name="bathroomCount"
+
+2
+------RealtorApiBoundaryUpdate415
+Content-Disposition: form-data; name="areaSquareMeters"
+
+145.5
+------RealtorApiBoundaryUpdate415
+Content-Disposition: form-data; name="imageFile"; filename="invalid.txt"
+Content-Type: text/plain
+
+Este contenido no corresponde a una imagen PNG ni JPG.
+------RealtorApiBoundaryUpdate415--
+
+###
+
+### Actualización con imagen demasiado grande
+PUT {{RealtorApi_HostAddress}}/api/properties/00000000-0000-0000-0000-000000000001
+Content-Type: multipart/form-data; boundary=----RealtorApiBoundaryUpdate413
+
+------RealtorApiBoundaryUpdate413
+Content-Disposition: form-data; name="title"
+
+Casa con imagen demasiado grande
+------RealtorApiBoundaryUpdate413
+Content-Disposition: form-data; name="description"
+
+Propiedad con archivo de más de 5 MB.
+------RealtorApiBoundaryUpdate413
+Content-Disposition: form-data; name="address"
+
+123 Manual Ave
+------RealtorApiBoundaryUpdate413
+Content-Disposition: form-data; name="price"
+
+2500
+------RealtorApiBoundaryUpdate413
+Content-Disposition: form-data; name="status"
+
+Available
+------RealtorApiBoundaryUpdate413
+Content-Disposition: form-data; name="bedroomCount"
+
+3
+------RealtorApiBoundaryUpdate413
+Content-Disposition: form-data; name="bathroomCount"
+
+2
+------RealtorApiBoundaryUpdate413
+Content-Disposition: form-data; name="areaSquareMeters"
+
+145.5
+# Sustituir el contenido por un archivo PNG o JPG mayor a 5 MB para validar el código 413.
+------RealtorApiBoundaryUpdate413--
+
+###

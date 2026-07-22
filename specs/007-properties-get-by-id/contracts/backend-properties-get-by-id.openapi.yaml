@@ -1,0 +1,98 @@
+openapi: 3.1.0
+info:
+  title: Consulta de propiedad por id
+  version: 1.0.0
+  description: Contrato HTTP para recuperar una única propiedad por id.
+paths:
+  /api/properties/{id}:
+    get:
+      summary: Obtener una propiedad por id
+      operationId: getPropertyById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identificador de la propiedad a consultar.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Propiedad encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropertyDetailResponse'
+        '400':
+          description: Id inválido según el contrato público.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Propiedad no encontrada.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    PropertyDetailResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - description
+        - address
+        - price
+        - status
+        - bedroomCount
+        - bathroomCount
+        - areaSquareMeters
+        - imageUrl
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        address:
+          type: string
+        price:
+          type: number
+          format: double
+        status:
+          type: string
+        bedroomCount:
+          type: integer
+          format: int32
+        bathroomCount:
+          type: integer
+          format: int32
+        areaSquareMeters:
+          type: number
+          format: double
+        imageUrl:
+          type: string
+    ProblemDetails:
+      type: object
+      additionalProperties: true
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true

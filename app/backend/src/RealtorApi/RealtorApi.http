@@ -20,6 +20,30 @@ Accept: application/json
 
 ###
 
+### Consulta de propiedad existente
+GET {{RealtorApi_HostAddress}}/api/properties/00000000-0000-0000-0000-000000000001
+Accept: application/json
+
+###
+
+### Consulta de propiedad sin imagen
+GET {{RealtorApi_HostAddress}}/api/properties/00000000-0000-0000-0000-000000000002
+Accept: application/json
+
+###
+
+### Consulta de propiedad inexistente
+GET {{RealtorApi_HostAddress}}/api/properties/11111111-1111-1111-1111-111111111111
+Accept: application/json
+
+###
+
+### Consulta de propiedad con id inválido
+GET {{RealtorApi_HostAddress}}/api/properties/invalid-id
+Accept: application/json
+
+###
+
 ### Alta de propiedad sin imagen
 POST {{RealtorApi_HostAddress}}/api/properties
 Content-Type: multipart/form-data; boundary=----RealtorApiBoundarySinImagen

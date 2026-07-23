@@ -138,6 +138,79 @@
         }
       }
     },
+    "/api/properties/{id}/status": {
+      "patch": {
+        "tags": [
+          "UpdatePropertyStatusSlice"
+        ],
+        "summary": "Update property status",
+        "description": "Updates only the status of an existing property.",
+        "operationId": "UpdatePropertyStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePropertyStatusRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdatePropertyStatusResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/properties": {
       "get": {
         "tags": [
@@ -907,6 +980,93 @@
             ]
           }
         }
+      },
+      "UpdatePropertyStatusRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PropertyStatus"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePropertyStatusResponse": {
+        "required": [
+          "id",
+          "title",
+          "description",
+          "address",
+          "price",
+          "status",
+          "bedroomCount",
+          "bathroomCount",
+          "areaSquareMeters",
+          "imageUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "price": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PropertyStatus"
+          },
+          "bedroomCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "bathroomCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "areaSquareMeters": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "imageUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
       }
     }
   },
@@ -916,6 +1076,9 @@
     },
     {
       "name": "GetPropertyByIdSlice"
+    },
+    {
+      "name": "UpdatePropertyStatusSlice"
     },
     {
       "name": "ListPropertiesSlice"

@@ -1,0 +1,122 @@
+openapi: 3.1.0
+info:
+  title: Actualización de estado de propiedad
+  version: 1.0.0
+  description: Contrato HTTP para actualizar únicamente el estado de una propiedad existente.
+paths:
+  /api/properties/{id}/status:
+    patch:
+      summary: Actualizar el estado de una propiedad
+      operationId: updatePropertyStatus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identificador único de la propiedad.
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePropertyStatusRequest'
+      responses:
+        '200':
+          description: Propiedad actualizada correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePropertyStatusResponse'
+        '400':
+          description: Solicitud inválida o estado ausente/no válido.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Propiedad no encontrada.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    UpdatePropertyStatusRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+      properties:
+        status:
+          $ref: '#/components/schemas/PropertyStatus'
+    UpdatePropertyStatusResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - description
+        - address
+        - price
+        - status
+        - bedroomCount
+        - bathroomCount
+        - areaSquareMeters
+        - imageUrl
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        address:
+          type: string
+        price:
+          type: number
+          format: double
+        status:
+          $ref: '#/components/schemas/PropertyStatus'
+        bedroomCount:
+          type: integer
+          format: int32
+        bathroomCount:
+          type: integer
+          format: int32
+        areaSquareMeters:
+          type: number
+          format: double
+        imageUrl:
+          type: string
+          nullable: true
+    PropertyStatus:
+      type: integer
+      format: int32
+      description: Estado de una propiedad.
+      enum:
+        - 0
+        - 1
+        - 2
+    ProblemDetails:
+      type: object
+      additionalProperties: true
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true

@@ -259,6 +259,49 @@ Content-Type: image/png
 
 ###
 
+### Actualización de estado de propiedad existente
+PATCH {{RealtorApi_HostAddress}}/api/properties/00000000-0000-0000-0000-000000000001/status
+Content-Type: application/json
+Accept: application/json
+
+{
+	"status": 1
+}
+
+###
+
+### Actualización de estado sin status
+PATCH {{RealtorApi_HostAddress}}/api/properties/00000000-0000-0000-0000-000000000001/status
+Content-Type: application/json
+Accept: application/json
+
+{
+}
+
+###
+
+### Actualización de estado con valor inválido
+PATCH {{RealtorApi_HostAddress}}/api/properties/00000000-0000-0000-0000-000000000001/status
+Content-Type: application/json
+Accept: application/json
+
+{
+	"status": 999
+}
+
+###
+
+### Actualización de estado sobre propiedad inexistente
+PATCH {{RealtorApi_HostAddress}}/api/properties/11111111-1111-1111-1111-111111111111/status
+Content-Type: application/json
+Accept: application/json
+
+{
+	"status": 2
+}
+
+###
+
 ### Actualización de propiedad inexistente
 PUT {{RealtorApi_HostAddress}}/api/properties/11111111-1111-1111-1111-111111111111
 Content-Type: multipart/form-data; boundary=----RealtorApiBoundaryUpdate404

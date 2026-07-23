@@ -1,54 +1,56 @@
-name: Validación del contrato OpenAPI v1
+name: OpenAPI Contract
 
-# Se ejecuta en PRs, pushes a main y de forma manual.
 on:
+  # Validar contratos en cambios propuestos hacia main.
   pull_request:
     branches:
       - main
+  # Revalidar contratos en cambios ya integrados en main.
   push:
     branches:
       - main
+  # Permitir ejecución manual para verificaciones ad-hoc.
   workflow_dispatch:
 
 jobs:
   validate-openapi-contract:
-    name: Validar contrato OpenAPI v1
+    name: Validate OpenAPI v1 contract
     runs-on: ubuntu-latest
 
     steps:
-      # Obtiene el repositorio para poder regenerar y comparar el contrato.
-      - name: Obtener el código
+      # Obtener el código del repositorio.
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # Usa exactamente el SDK indicado por global.json.
-      - name: Configurar .NET
+      # Instalar exactamente el SDK definido por global.json.
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
 
-      # Habilita Node.js para ejecutar Redocly vía npx.
-      - name: Configurar Node.js
+      # Instalar Node LTS para ejecutar Redocly via npx.
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "20"
 
-      # Restaura NSwag desde el manifiesto local del repositorio.
-      - name: Restaurar herramientas locales de .NET
-        shell: pwsh
+      # Restaurar herramientas locales (incluye NSwag).
+      - name: Restore .NET tools
         run: dotnet tool restore
 
-      # Regenera el documento y valida Redocly + NSwag.
-      - name: Regenerar y validar el contrato OpenAPI v1
-        shell: pwsh
+      # Regenerar y validar OpenAPI (build + Redocly + smoke NSwag).
+      - name: Generate and validate OpenAPI v1
         run: pwsh support/scripts/generate-openapi-v1.ps1
 
-      # Ejecuta la batería completa de pruebas, incluyendo la red de seguridad anti-drift.
-      - name: Ejecutar las pruebas del repositorio
-        shell: pwsh
+      # Ejecutar pruebas, incluyendo OpenApiDriftTests.
+      - name: Run test suite
         run: dotnet test app/Realtor.sln
 
-      # Verifica que el archivo versionado no haya quedado desalineado.
-      - name: Verificar que no exista drift en v1.json
-        shell: pwsh
+      # Fallar si v1.json cambia y no está versionado en el commit/PR.
+      - name: Verify no OpenAPI drift
+        shell: bash
         run: |
-          git diff --exit-code -- app/backend/src/RealtorApi/wwwroot/openapi/v1.json
+          git diff --exit-code -- app/backend/src/RealtorApi/wwwroot/openapi/v1.json || {
+            echo "OpenAPI drift detectado: actualiza y versiona app/backend/src/RealtorApi/wwwroot/openapi/v1.json";
+            exit 1;
+          }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OpenApi;
 using Microsoft.AspNetCore.Routing;
 using RealtorApi.Infrastructure.Api;
 using RealtorApi.Infrastructure.Results;
@@ -13,7 +14,14 @@ public sealed class UpdatePropertySlice : ISlice
     {
         endpoints.MapPut("/api/properties/{id:guid}", HandleAsync)
             .AddValidation<UpdatePropertyRequest>()
-            .WithName("UpdateProperty");
+            .WithName("UpdateProperty")
+            .WithSummary("Update property")
+            .WithDescription("Updates an existing property and optionally replaces the stored image.")
+            .Accepts<UpdatePropertyRequest>("multipart/form-data")
+            .Produces<UpdatePropertyResponse>(StatusCodes.Status200OK)
+            .Produces<HttpValidationProblemDetails>(StatusCodes.Status400BadRequest)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+                .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 
     private static async Task<IResult> HandleAsync(

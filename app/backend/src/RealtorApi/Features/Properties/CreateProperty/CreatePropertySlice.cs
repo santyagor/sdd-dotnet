@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OpenApi;
 using Microsoft.AspNetCore.Routing;
 using RealtorApi.Infrastructure.Api;
 using RealtorApi.Infrastructure.Validation;
@@ -12,7 +13,13 @@ public sealed class CreatePropertySlice : ISlice
     {
         endpoints.MapPost("/api/properties", HandleAsync)
             .AddValidation<CreatePropertyRequest>()
-            .WithName("CreateProperty");
+            .WithName("CreateProperty")
+            .WithSummary("Create property")
+            .WithDescription("Creates a new property and optionally stores an image.")
+            .Accepts<CreatePropertyRequest>("multipart/form-data")
+            .Produces<CreatePropertyResponse>(StatusCodes.Status201Created)
+            .Produces<HttpValidationProblemDetails>(StatusCodes.Status400BadRequest)
+                .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 
     private static async Task<IResult> HandleAsync(

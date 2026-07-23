@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OpenApi;
 using Microsoft.AspNetCore.Routing;
 using RealtorApi.Infrastructure.Api;
 using RealtorApi.Infrastructure.Validation;
@@ -12,7 +13,12 @@ public sealed class ListPropertiesSlice : ISlice
     {
         endpoints.MapGet("/api/properties", HandleAsync)
             .AddValidation<ListPropertiesQuery>()
-            .WithName("ListProperties");
+            .WithName("ListProperties")
+            .WithSummary("List properties")
+            .WithDescription("Returns a paginated list of public property summaries.")
+            .Produces<PaginatedPropertyListResponse>(StatusCodes.Status200OK)
+            .Produces<HttpValidationProblemDetails>(StatusCodes.Status400BadRequest)
+                .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 
     private static async Task<IResult> HandleAsync(

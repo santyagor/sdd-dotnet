@@ -9,6 +9,7 @@ using Microsoft.Extensions.FileProviders;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRouting();
+builder.Services.AddOpenApi("v1");
 builder.Services.AddSlices();
 builder.Services.AddHandlers();
 builder.Services.AddFluentValidation();
